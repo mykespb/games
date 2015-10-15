@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-maker.py (C) myke 2015-10-14 1.1
+# mk-ttt-maker.py (C) myke 2015-10-16 1.3
 # Tic-tak-toe maker
 
 import pprint
 
-DEBUG = 0
 TRACE = 0
 
 log = []        # list opf all games as [(moves, result)]
-# moves = (4, 0, 1) = points
-# result= +1 for X wins, 0 = draw, -1 = 0 wins
-# points = ((0, 1, 2), (3, 4, 5), (6, 7, 8))
+                # moves = (4, 0, 1) = points
+                # result= +1 for X wins, 0 = draw, -1 = 0 wins
+                # points = ((0, 1, 2), (3, 4, 5), (6, 7, 8))
 
-b = []              # board
-gama = []           # moves in current game
+b = []          # board
+gama = []       # moves in current game
 trace = 0
 etc = resxo = 0
 who = {1:0, -1:0}
@@ -39,6 +38,7 @@ def playall():
 
 
 def put (p):
+    """make move, recursively"""
     global b, gama, log, trace, resxo, etc
     trace += 1
     if TRACE and trace % 10000 == 0: print ("+", end="")
