@@ -21,7 +21,7 @@ def main(args):
     playall()
     calcall()
     saveall()
-    print ("All done with trace=%d and results=%d, which of total=%d gives %5.2f percents,\nX won %d times, O won %d times, with ratio %5.2f\n\n" % (trace, resxo, (etc + resxo), (100. * resxo / (etc + resxo)), who[1], who[-1], (1.0 * who[1] / who[-1]) ))
+    print ("All done with results=%d, which of total=%d gives %5.2f percents,\nX won %d times, O won %d times, with ratio %5.2f\n\n" % (resxo, (etc + resxo), (100. * resxo / (etc + resxo)), who[1], who[-1], (1.0 * who[1] / who[-1]) ))
     return 0
 
 
