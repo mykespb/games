@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-maker.py (C) myke 2015-10-16 1.3
+# mk-ttt-maker.py (C) myke 2015-10-16 1.5
 # Tic-tak-toe maker
 
 import pprint
-
-TRACE = 0
 
 log = []        # list opf all games as [(moves, result)]
                 # moves = (4, 0, 1) = points
@@ -14,7 +12,6 @@ log = []        # list opf all games as [(moves, result)]
 
 b = []          # board
 gama = []       # moves in current game
-trace = 0
 etc = resxo = 0
 who = {1:0, -1:0}
 
@@ -35,14 +32,12 @@ def playall():
     b = [0, 0, 0,   0, 0, 0,   0, 0, 0]
     put (1)
     pprint.pprint (log)
+    showone ()
 
 
 def put (p):
     """make move, recursively"""
-    global b, gama, log, trace, resxo, etc
-    trace += 1
-    if TRACE and trace % 10000 == 0: print ("+", end="")
-    if TRACE and trace % 1000  == 0: print (".", end="")
+    global b, gama, log, resxo, etc
 
     piece = p % 2 * 2 - 1
 
@@ -121,6 +116,18 @@ def xo():
     s = "0.X"
     p = [s[x+1] for x in b]
     return p
+
+
+def showone():
+    """show any sample solution (say, 1st)"""
+    global b, log
+    print ("\nsample solution:")
+    if log:
+        for i, p in enumerate(log[0][0]):
+            b[p] = i%2 *2 -1
+        show()
+    else:
+        print ("none available :(")
 
 
 if __name__ == '__main__':
