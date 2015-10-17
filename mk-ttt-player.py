@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-player.py (C) myke 2015-10-17 0.2
+# mk-ttt-player.py (C) myke 2015-10-17 0.3
 # Tic-tak-toe player
 
 import pprint, pickle, random
@@ -101,7 +101,7 @@ def play ():
                 show()
                 continue
 
-            print ("Somethign went wrone :(")
+            print ("Somethign went wrong :(")
             break
 
         else:               # player moves
@@ -118,7 +118,7 @@ def play ():
                     print ("Illegal move. Please repeat!")
                     continue
 
-                if m<0 or m>9:
+                if m < 0 or m > 8:
                     print ("Outside move. Please repeat!")
                     continue
 
