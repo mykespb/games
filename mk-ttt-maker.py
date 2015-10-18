@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-maker.py (C) myke 2015-10-16 1.5
+# mk-ttt-maker.py (C) myke 2015-10-17 1.6
 # Tic-tak-toe maker
 
-import pprint
+import pprint, pickle
 
 log = []        # list opf all games as [(moves, result)]
                 # moves = (4, 0, 1) = points
@@ -19,7 +19,6 @@ def main(args):
     """main dispatcher"""
     print ("This is Tic-Tak-Toe maker.")
     playall()
-    calcall()
     saveall()
     print ("All done with results=%d, which of total=%d gives %5.2f percents,\nX won %d times, O won %d times, with ratio %5.2f\n\n" % (resxo, (etc + resxo), (100. * resxo / (etc + resxo)), who[1], who[-1], (1.0 * who[1] / who[-1]) ))
     return 0
@@ -90,14 +89,12 @@ def endp ():
     return 0
 
 
-def calcall():
-    """using log calculate optimal moves for X and O"""
-    print ("Calculating...")
-
-
 def saveall():
     """save tables of optimal moves to files"""
     print ("Saving...")
+    with open ('mk-ttt.pickle', 'wb') as w:
+        pickle.dump(log, w, pickle.HIGHEST_PROTOCOL)
+    print ("Data saved, maybe...")
 
 
 def show():

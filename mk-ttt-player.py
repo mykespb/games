@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-player.py (C) myke 2015-10-17 0.3
+# mk-ttt-player.py (C) myke 2015-10-18 1.0
 # Tic-tak-toe player
 
 import pprint, pickle, random
@@ -35,7 +35,7 @@ def restoreall():
 def playall():
     """main player"""
     global que, need, notneed, b
-    que = input ("Let us play. Your turn? (12Yyq) [q]]")
+    que = input ("Let us play. Your turn? (12Yyq) [q]] ")
     que = que.strip()
     if que in 'qQ':
         print ("Bye-bye.")
@@ -58,9 +58,13 @@ def play ():
     gama = []
     showtable()
 
+    print ("log.len", len(log))
+
     # game loop
     while True:
         turn = 3 - turn
+        print ("turn=", turn, ", need=", need, "gama=", gama)
+        best = []
 
         if len(gama) == 9:  # full board
             res = 0
@@ -69,23 +73,26 @@ def play ():
         res = endp()
         if res: break
         done = tuple(gama)
+        print ("done=", done)
 
         if turn == 1:       # computer moves
 
-            best = [x for x in log if x[0][:-1] == done and x[1] == need]
-            if best:
-                m = best[0][-1]
+            best = [x for x in log if comp (x[0][:-1], done) and x[1] == need]
+            print ("best1.len=", len(best))
+            if len(best):
+                m = best[0][0][-1]
                 b [m] = need
                 gama.append(m)
                 print ("Computer finally moves:", m+1)
                 show()
                 continue
 
-            llog = len(log)
-            best = [x for x in log if x[0][:llog] == done and x[1] == need]
-            if best:
-                best = random.choice(best)
-                m = best[0][-1]
+            lendone = len(done)
+            best = [x for x in log if comp (x[0][:lendone], done) and x[1] == need]
+            if len(best):
+                bm = random.choice(best)
+                print ("bm=", bm)
+                m = bm[0][lendone]
                 b [m] = need
                 gama.append(m)
                 print ("Computer best moves:", m+1)
@@ -93,6 +100,7 @@ def play ():
                 continue
 
             best = tuple(all - set(gama))
+            print ("best3.len=", len(best))
             if len(best):
                 m = random.choice(best)
                 b [m] = need
@@ -101,12 +109,18 @@ def play ():
                 show()
                 continue
 
-            print ("Somethign went wrong :(")
-            break
+            if m in gama:
+                print ("Auto same move. Break!")
+                break
+            b [m] = need
+            gama.append(m)
+            print ("Computer finally moves:", m+1)
+            show()
+            continue
 
         else:               # player moves
             while True:
-                m = input("Enter your move or 'q' for quit:")
+                m = input("Enter your move or 'q' for quit: ")
                 m = m.strip()
                 if m in 'qQ':
                     print ("Quitting...")
@@ -132,7 +146,10 @@ def play ():
             b [m] = notneed
             show()
 
-            log = [x for x in log if len(gama) >= len(x[0]) and x[0][len(gama)] == m]
+#            log = [x for x in log if len(gama) >= len(x[0]) and x[0][len(gama)] == m]
+        lengama = len(gama)
+        log = [x for x in log if comp(gama, x[0][:lengama]) ]
+        print ("log.len", len(log))
 
     # game over
     res = endp()
@@ -191,6 +208,16 @@ def show():
 ---+---+---
 %2s | %1s | %1s
 """ % (*(xo()),))
+
+
+def comp (a, b):
+    """compare two arrays"""
+    if len(a) != len(b):
+        return False
+    for e in zip(a, b):
+        if e[0] != e[1]:
+            return False
+    return True
 
 
 def xo():

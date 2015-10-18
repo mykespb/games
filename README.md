@@ -7,5 +7,6 @@ mk-ttt-maker.py
 prepare full tree/ array of game
 
 mk-ttt-play.py
-play the game using the prepared array (TBD)
+play the game using the prepared array 
+(showing debug and thinking info)
 
