@@ -5,6 +5,7 @@
 
 import pprint, pickle, random
 
+LOG = 0
 log = []
 que = need = 0
 b = []
@@ -58,12 +59,12 @@ def play ():
     gama = []
     showtable()
 
-    print ("log.len", len(log))
+    if LOG: print ("log.len", len(log))
 
     # game loop
     while True:
         turn = 3 - turn
-        print ("turn=", turn, ", need=", need, "gama=", gama)
+        if LOG: print ("turn=", turn, ", need=", need, "gama=", gama)
         best = []
 
         if len(gama) == 9:  # full board
@@ -73,12 +74,12 @@ def play ():
         res = endp()
         if res: break
         done = tuple(gama)
-        print ("done=", done)
+        if LOG: print ("done=", done)
 
         if turn == 1:       # computer moves
 
             best = [x for x in log if comp (x[0][:-1], done) and x[1] == need]
-            print ("best1.len=", len(best))
+            if LOG: print ("best1.len=", len(best))
             if len(best):
                 m = best[0][0][-1]
                 b [m] = need
@@ -91,7 +92,7 @@ def play ():
             best = [x for x in log if comp (x[0][:lendone], done) and x[1] == need]
             if len(best):
                 bm = random.choice(best)
-                print ("bm=", bm)
+                if LOG: print ("bm=", bm)
                 m = bm[0][lendone]
                 b [m] = need
                 gama.append(m)
@@ -100,7 +101,7 @@ def play ():
                 continue
 
             best = tuple(all - set(gama))
-            print ("best3.len=", len(best))
+            if LOG: print ("best3.len=", len(best))
             if len(best):
                 m = random.choice(best)
                 b [m] = need
@@ -149,7 +150,7 @@ def play ():
 #            log = [x for x in log if len(gama) >= len(x[0]) and x[0][len(gama)] == m]
         lengama = len(gama)
         log = [x for x in log if comp(gama, x[0][:lengama]) ]
-        print ("log.len", len(log))
+        if LOG: print ("log.len", len(log))
 
     # game over
     res = endp()
