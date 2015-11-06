@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# mk-ttt-player.py (C) myke 2015-10-18 1.0
+# mk-ttt-player.py (C) myke 2015-11-06 1.7
 # Tic-tak-toe player
 
 import pprint, pickle, random
@@ -231,3 +231,4 @@ def xo():
 if __name__ == '__main__':
     import sys
     sys.exit(main(sys.argv))
+
